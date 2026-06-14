@@ -9,14 +9,7 @@ import villa from "@/assets/villa.jpg";
 import streetView from "@/assets/street-view.jpg";
 import archGate from "@/assets/arch-gate.jpg";
 import simplex from "@/assets/simplex.jpg";
-import grandEntranceArchIcon from "@/assets/grand-entrance-arch-icon.png";
-import ccInternalRoadsIcon from "@/assets/internal cc roads.png";
-import undergroundDrainageIcon from "@/assets/underground drainage.png";
-import avenuePlantationIcon from "@/assets/avenue plantation.png";
-import panchayatWaterSupplyIcon from "@/assets/panchayath water-supply.png";
-import overheadWaterTankIcon from "@/assets/overhead water-tank.png";
-import solarFencingLightsIcon from "@/assets/solar-fencing & lights .png";
-import rainwaterHarvestingIcon from "@/assets/rain-water harvesting.png";
+import cctvIcon from "@/assets/cctv-1-3.png";
 import { SectionHeading } from "@/components/SectionHeading";
 
 const sliderImages = [
@@ -49,16 +42,17 @@ const highlights = [
 ];
 
 const features = [
-  { image: grandEntranceArchIcon, t: "Grand Entrance Arch" },
-  { image: ccInternalRoadsIcon, t: "CC Internal Roads" },
-  { image: undergroundDrainageIcon, t: "Underground Drainage" },
-  { image: avenuePlantationIcon, t: "Avenue Plantation" },
-  { image: panchayatWaterSupplyIcon, t: "Panchayat Water Supply" },
-  { image: overheadWaterTankIcon, t: "Overhead Water Tank" },
-  { image: solarFencingLightsIcon, t: "Solar Fencing and Lights" },
-  { image: rainwaterHarvestingIcon, t: "Rainwater Harvesting" },
+  { icon: FileText, t: "Grand Entrance Arch" },
+  { icon: Menu, t: "CC Internal Roads" },
+  { icon: Droplet, t: "Underground Drainage" },
+  { icon: Leaf, t: "Avenue Plantation" },
+  { icon: Zap, t: "Underground Electrification" },
+  { icon: Waves, t: "Panchayat Water Supply" },
+  { icon: Database, t: "Overhead Water Tank" },
   { icon: Smile, t: "Children Play Area" },
-  { icon: Camera, t: "24x7 CCTV Surveillance" },
+  { icon: Sun, t: "Solar Fencing and Lights" },
+  { image: cctvIcon, t: "24x7 CCTV Surveillance" },
+  { icon: CloudRain, t: "Rainwater Harvesting" },
   { icon: Shield, t: "Gated Community" },
 ];
 
@@ -206,14 +200,10 @@ function Home() {
               <p className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">Infrastructure</p>
               <h3 className="mt-2 font-display text-2xl font-bold text-primary md:text-3xl">Project Features</h3>
               <div className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-                {features.map(({ icon: Icon, image, t }) => (
+                {features.map(({ icon: Icon, t }) => (
                   <div key={t} className="flex flex-col items-center gap-2 rounded-xl border border-border bg-card p-4 text-center transition hover:border-gold hover:shadow-sm">
                     <div className="flex h-11 w-11 items-center justify-center rounded-lg bg-accent">
-                      {image ? (
-                        <img src={image} alt="" className="h-7 w-7 object-contain" />
-                      ) : (
-                        Icon && <Icon className="h-5 w-5 text-gold" />
-                      )}
+                      <Icon className="h-5 w-5 text-gold" />
                     </div>
                     <span className="text-xs font-medium text-foreground">{t}</span>
                   </div>
