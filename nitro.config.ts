@@ -4,4 +4,10 @@ import { defineNitroConfig } from "nitro/config";
 // Cloudflare Workers cannot use traditional SMTP.
 export default defineNitroConfig({
   preset: "vercel",
+  publicAssets: [
+    {
+      baseURL: "/",
+      dir: "dist",
+    },
+  ],
 });
