@@ -34,9 +34,6 @@ export function getServerConfig(): ServerConfig {
 export function assertEnquiryConfig(config: ServerConfig): void {
   const missing: string[] = [];
   if (!config.mongodbUri) missing.push("MONGODB_URI");
-  if (!config.smtpHost) missing.push("SMTP_HOST");
-  if (!config.smtpUser) missing.push("SMTP_USER");
-  if (!config.smtpPass) missing.push("SMTP_PASS");
   if (missing.length > 0) {
     throw new Error(`Missing required environment variables: ${missing.join(", ")}`);
   }

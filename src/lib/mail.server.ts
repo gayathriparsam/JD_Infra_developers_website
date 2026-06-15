@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 import type { Transporter } from "nodemailer";
 
-import { assertEnquiryConfig, getServerConfig } from "./config.server";
+import { getServerConfig } from "./config.server";
 
 export type EnquiryPayload = {
   name: string;
@@ -12,20 +12,21 @@ export type EnquiryPayload = {
 
 let transporter: Transporter | undefined;
 
-function getTransporter(): Transporter {
-  if (!transporter) {
-    const config = getServerConfig();
-    assertEnquiryConfig(config);
-    transporter = nodemailer.createTransport({
-      host: config.smtpHost,
-      port: config.smtpPort,
-      secure: config.smtpSecure,
-      auth: {
-        user: config.smtpUser,
-        pass: config.smtpPass,
-      },
-    });
+function getTransporter(): Transporter | null {
+  if (transporter) return transporter;
+  const config = getServerConfig();
+  if (!config.smtpHost || !config.smtpUser || !config.smtpPass) {
+    return null;
   }
+  transporter = nodemailer.createTransport({
+    host: config.smtpHost,
+    port: config.smtpPort,
+    secure: config.smtpSecure,
+    auth: {
+      user: config.smtpUser,
+      pass: config.smtpPass,
+    },
+  });
   return transporter;
 }
 
@@ -59,7 +60,14 @@ function escapeHtml(value: string): string {
 export async function sendEnquiryEmail(enquiry: EnquiryPayload): Promise<void> {
   const config = getServerConfig();
   const { text, html } = buildEmailBodies(enquiry);
-  await getTransporter().sendMail({
+  const transport = getTransporter();
+  
+  if (!transport) {
+    console.log("Email not configured, logging enquiry:", { name: enquiry.name, phone: enquiry.phone, budget: enquiry.budget });
+    return;
+  }
+  
+  await transport.sendMail({
     from: config.smtpFrom,
     to: config.clientEmail,
     subject: `New Vishnu Kuteer enquiry from ${enquiry.name}`,
